@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+main > div,
+main > .section,
+main > .section:first-of-type {
+  margin: 0;
+}
+main > .section > div {
+  max-width: none;
+  padding: 0;
+}
+body {
+  overflow: auto;
+}
+
+main .list-banking-products {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 8px;
+  max-width: 780px;
+  position: relative;
+}
+
+main .list-banking-products .carousel-wrapper {
+  position: relative;
+  overflow: visible;
+}
+
+main .list-banking-products .carousel-scroll {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+
+main .list-banking-products .carousel-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+main .list-banking-products .product-card {
+  flex: 0 0 210px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 300px;
+}
+
+main .list-banking-products .card-image {
+  flex: 6;
+  position: relative;
+  overflow: hidden;
+}
+
+main .list-banking-products .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+main .list-banking-products .cta-image-btn {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2d3943;
+  color: #fff;
+  border: none;
+  border-radius: 13px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+main .list-banking-products .cta-image-btn:hover {
+  opacity: 0.9;
+}
+
+main .list-banking-products .card-info {
+  flex: 4;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+main .list-banking-products .card-name {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3;
+}
+
+main .list-banking-products .card-description {
+  font-size: 11px;
+  margin: 0;
+  opacity: 0.78;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+main .list-banking-products .card-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+main .list-banking-products .card-price {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+main .list-banking-products .card-badge {
+  font-size: 10px;
+  padding: 3px 8px;
+  background: rgba(55, 142, 240, 0.12);
+  color: #378ef0;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+main .list-banking-products .carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+main .list-banking-products .carousel-arrow:hover {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+main .list-banking-products .carousel-arrow:focus-visible {
+  outline: 2px solid #2d3943;
+  outline-offset: 2px;
+}
+
+main .list-banking-products .carousel-arrow-left {
+  left: -12px;
+}
+
+main .list-banking-products .carousel-arrow-right {
+  right: -12px;
+}
+
+main .list-banking-products .carousel-fade {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 60px;
+  pointer-events: none;
+  border-radius: 0 10px 10px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  main .list-banking-products {
+    background: transparent;
+  }
+  main .list-banking-products .carousel-arrow {
+    background: rgba(50, 50, 50, 0.95);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #e1e5ea;
+  }
+  main .list-banking-products .carousel-arrow:hover {
+    background: #3a3a3a;
+  }
+  main .list-banking-products .card-badge {
+    background: rgba(55, 142, 240, 0.2);
+    color: #6ba3ff;
+  }
+}
+
+body.dark main .list-banking-products {
+  background: transparent;
+}
+
+body.dark main .list-banking-products .carousel-arrow {
+  background: rgba(50, 50, 50, 0.95);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #e1e5ea;
+}
+
+body.dark main .list-banking-products .carousel-arrow:hover {
+  background: #3a3a3a;
+}
+
+body.dark main .list-banking-products .card-badge {
+  background: rgba(55, 142, 240, 0.2);
+  color: #6ba3ff;
+}
