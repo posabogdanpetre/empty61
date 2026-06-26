@@ -1,55 +1,52 @@
+// Sample data for standalone EDS preview (no bridge).
+// In production, data comes dynamically from the bridge as a single flat item.
 const SAMPLE_DATA = [
   {
-    "name": "PNC Cash Rewards Visa",
-    "description": "Cash back credit card with category rewards on gas, dining, and groceries.",
-    "price": "$0 annual fee",
-    "category": "Credit Card",
-    "image_url": "https://www.pnc.com/en/personal-banking/banking/credit-cards/_jcr_content/main/pageBody/containergrid_copy_c_283020490/embeddedGrid/containergrid_copy_c_215278159/embeddedGrid/containergrid/embeddedGrid/image.coreimg.png/1778094519173/creditcard-cash-rewards-200-bonus-ribbon.png"
+    name: 'Pantofi alergare barbati Puma x Hyrox Deviate Nitro Elite 4 SS 2026',
+    description: "Men's road running shoes from the Puma x Hyrox collection.",
+    image_url: 'https://media.sportguru.ro/media/catalog/product/p/u/puma-x-hyrox-deviate-nitro_-elit.jpg?width=304&height=219&store=default&image-type=small_image',
+    price: '1.000,00 Lei',
+    category: 'Running Shoes',
+    is_deal: true,
+    original_price: '1.249,00 Lei',
+    discount_percentage: '20% OFF',
   },
   {
-    "name": "PNC Cash Unlimited Visa Signature",
-    "description": "Earn unlimited 2% cash back on every purchase with no category restrictions.",
-    "price": "$0 annual fee",
-    "category": "Credit Card",
-    "image_url": "https://www.pnc.com/en/personal-banking/banking/credit-cards/_jcr_content/main/pageBody/containergrid_197409_2030261130/embeddedGrid/containergrid_copy/embeddedGrid/containergrid/embeddedGrid/image.coreimg.png/1769797295149/pnc-cash-unlimited-signature.png"
+    name: 'Pantofi alergare Hoka Cielo X1 3.0',
+    description: 'Hoka Cielo X1 3.0 performance road running shoes.',
+    image_url: 'https://media.sportguru.ro/media/catalog/product/1/1/1171927-nyz_1.jpg?width=304&height=219&store=default&image-type=small_image',
+    price: '1.215,50 Lei',
+    category: 'Running Shoes',
+    is_deal: true,
+    original_price: '1.430,00 Lei',
+    discount_percentage: '15% OFF',
   },
-  {
-    "name": "PNC Spend Wise Visa",
-    "description": "Unlock a lower purchase APR over time as you build responsible credit habits.",
-    "category": "Credit Card",
-    "image_url": "https://www.pnc.com/en/personal-banking/banking/credit-cards/_jcr_content/main/pageBody/containergrid_1061138187/embeddedGrid/containergrid_copy/embeddedGrid/containergrid/embeddedGrid/image.coreimg.png/1724442792947/creditcard-spend-wise.png"
-  },
-  {
-    "name": "PNC Secured Visa",
-    "description": "Secured credit card to help establish and build your credit history.",
-    "category": "Credit Card",
-    "image_url": "https://www.pnc.com/en/personal-banking/banking/credit-cards/_jcr_content/main/pageBody/containergrid/embeddedGrid/containergrid_copy_c/embeddedGrid/containergrid_121507/embeddedGrid/image_copy.coreimg.png/1769797267110/creditcard-secured.png"
-  }
 ];
 
-const PALETTE = ['#2d3943', '#e1e5ea'];
-
+// Brand palette from BuildWidgetRequest.
+// getThemedCardBg() darkens palette[0] to luminance <= 0.12 so white text has WCAG AA contrast.
+const PALETTE = ['#6100a2', '#3de525'];
 function getThemedCardBg(palette) {
   if (!palette || !palette[0]) return null;
   let hex = palette[0].replace('#', '');
-  if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
   if (hex.length !== 6) return null;
-  let [r, g, b] = [parseInt(hex.slice(0,2),16), parseInt(hex.slice(2,4),16), parseInt(hex.slice(4,6),16)];
+  const [r, g, b] = [parseInt(hex.slice(0, 2), 16), parseInt(hex.slice(2, 4), 16), parseInt(hex.slice(4, 6), 16)];
   if (isNaN(r) || isNaN(g) || isNaN(b)) return null;
-  const lum = (c) => { const s=c/255; return s<=0.03928?s/12.92:Math.pow((s+0.055)/1.055,2.4); };
-  const relLum = (r,g,b) => 0.2126*lum(r)+0.7152*lum(g)+0.0722*lum(b);
-  if (relLum(r,g,b) <= 0.12) return { bg: `#${hex}`, fg: '#ffffff' };
-  let lo=0, hi=1;
-  for (let i=0; i<20; i++) {
-    const mid=(lo+hi)/2;
-    if (relLum(Math.round(r*mid),Math.round(g*mid),Math.round(b*mid)) > 0.12) hi=mid; else lo=mid;
+  const lum = (c) => { const s = c / 255; return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4); };
+  const relLum = (rr, gg, bb) => 0.2126 * lum(rr) + 0.7152 * lum(gg) + 0.0722 * lum(bb);
+  if (relLum(r, g, b) <= 0.12) return { bg: `#${hex}`, fg: '#ffffff' };
+  let lo = 0; let hi = 1;
+  for (let i = 0; i < 20; i += 1) {
+    const m = (lo + hi) / 2;
+    if (relLum(Math.round(r * m), Math.round(g * m), Math.round(b * m)) > 0.12) hi = m; else lo = m;
   }
-  const dr=Math.round(r*lo), dg=Math.round(g*lo), db=Math.round(b*lo);
-  return { bg:`#${dr.toString(16).padStart(2,'0')}${dg.toString(16).padStart(2,'0')}${db.toString(16).padStart(2,'0')}`, fg:'#ffffff' };
+  const dr = Math.round(r * lo); const dg = Math.round(g * lo); const db = Math.round(b * lo);
+  return { bg: `#${dr.toString(16).padStart(2, '0')}${dg.toString(16).padStart(2, '0')}${db.toString(16).padStart(2, '0')}`, fg: '#ffffff' };
 }
-
 const theme = getThemedCardBg(PALETTE);
-const CARD_COLORS = ['#378ef0','#9256d9','#0fb5ae','#e68619','#d83790','#2dca72','#4046ca','#72b340'];
+const ACCENT = PALETTE[0] || '#6100a2';
+const CARD_COLORS = ['#6100a2', '#9256d9', '#0fb5ae', '#e68619', '#d83790', '#2dca72', '#4046ca', '#72b340'];
 
 export default async function decorate(block, bridge) {
   let item;
@@ -58,13 +55,14 @@ export default async function decorate(block, bridge) {
     bridge.applyHostStyles();
     const isPreview = bridge.hostContext?.preview === true;
     if (isPreview) {
-      item = SAMPLE_DATA[0];
+      [item] = SAMPLE_DATA;
     } else {
+      // Detail concept — structuredContent IS the item (flat). No wrapper key.
       const _result = await bridge.toolResult;
       item = (_result?.structuredContent || _result) || {};
     }
   } else {
-    item = SAMPLE_DATA[0];
+    [item] = SAMPLE_DATA;
   }
 
   block.textContent = '';
@@ -82,73 +80,87 @@ export default async function decorate(block, bridge) {
 }
 
 function renderDetail(block, item, bridge) {
+  if (!item || !item.name) return;
+
   const card = document.createElement('div');
   card.className = 'detail-card';
 
-  const imageSection = document.createElement('div');
-  imageSection.className = 'detail-image';
-
-  const fallbackColor = CARD_COLORS[0];
+  // Image (left)
+  const imageWrap = document.createElement('div');
+  imageWrap.className = 'detail-image';
   const colorDiv = () => {
     const d = document.createElement('div');
-    d.style.cssText = `width:100%;height:100%;background-color:${fallbackColor};`;
+    d.style.cssText = `width:100%;height:100%;background-color:${CARD_COLORS[0]};`;
     return d;
   };
-
   if (item.image_url) {
     const img = document.createElement('img');
     img.src = item.image_url;
-    img.alt = item.name || 'Product image';
+    img.alt = item.name || '';
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-    img.onerror = () => img.parentNode.replaceChild(colorDiv(), img);
-    imageSection.appendChild(img);
+    img.onerror = () => img.parentNode && img.parentNode.replaceChild(colorDiv(), img);
+    imageWrap.appendChild(img);
   } else {
-    imageSection.appendChild(colorDiv());
+    imageWrap.appendChild(colorDiv());
   }
+  card.appendChild(imageWrap);
 
-  const ctaBtn = document.createElement('button');
-  ctaBtn.className = 'image-cta';
-  ctaBtn.textContent = 'Learn More & Apply';
-  ctaBtn.style.cssText = `background:${PALETTE[0]};color:#fff;`;
-  if (bridge) {
-    ctaBtn.addEventListener('click', () => {
-      bridge.sendMessage(`Tell me more about ${item.name || 'this product'}`);
-    });
-  }
-  imageSection.appendChild(ctaBtn);
+  // Content (right)
+  const content = document.createElement('div');
+  content.className = 'detail-content';
+  content.style.cssText = `background:${theme?.bg ?? '#1a1a1a'};color:${theme?.fg ?? '#fff'}`;
 
-  const contentSection = document.createElement('div');
-  contentSection.className = 'detail-content';
-  contentSection.style.cssText = `background:${theme?.bg ?? '#1a1a1a'};color:${theme?.fg ?? '#fff'};`;
-
-  if (item.name) {
-    const title = document.createElement('h2');
-    title.textContent = item.name;
-    contentSection.appendChild(title);
-  }
+  const title = document.createElement('h3');
+  title.className = 'detail-name';
+  title.textContent = item.name;
+  content.appendChild(title);
 
   if (item.description) {
     const desc = document.createElement('p');
-    desc.className = 'description';
+    desc.className = 'detail-desc';
     desc.textContent = item.description;
-    contentSection.appendChild(desc);
+    content.appendChild(desc);
   }
 
-  if (item.price) {
-    const price = document.createElement('div');
-    price.className = 'price';
-    price.textContent = item.price;
-    contentSection.appendChild(price);
+  const priceRow = document.createElement('div');
+  priceRow.className = 'detail-price-row';
+  const price = document.createElement('span');
+  price.className = 'detail-price';
+  price.textContent = item.price || '';
+  priceRow.appendChild(price);
+  if (item.original_price && item.original_price !== item.price) {
+    const orig = document.createElement('span');
+    orig.className = 'detail-orig-price';
+    orig.textContent = item.original_price;
+    priceRow.appendChild(orig);
   }
+  if (item.discount_percentage) {
+    const disc = document.createElement('span');
+    disc.className = 'detail-discount';
+    disc.textContent = item.discount_percentage;
+    priceRow.appendChild(disc);
+  }
+  content.appendChild(priceRow);
 
   if (item.category) {
-    const badge = document.createElement('span');
-    badge.className = 'category-badge';
-    badge.textContent = item.category;
-    contentSection.appendChild(badge);
+    const cat = document.createElement('span');
+    cat.className = 'detail-category';
+    cat.textContent = item.category;
+    content.appendChild(cat);
   }
 
-  card.appendChild(imageSection);
-  card.appendChild(contentSection);
+  const btn = document.createElement('button');
+  btn.className = 'detail-cta';
+  btn.type = 'button';
+  btn.textContent = 'More Details';
+  btn.style.background = ACCENT;
+  if (bridge) {
+    btn.addEventListener('click', () => {
+      bridge.sendMessage(`Tell me more about ${item.name}`);
+    });
+  }
+  content.appendChild(btn);
+
+  card.appendChild(content);
   block.appendChild(card);
 }
